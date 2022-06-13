@@ -13,6 +13,10 @@ public class CartPage {
 		System.out.println("click on : "+cart);
 	}
 	
+	public void logo() {
+		System.out.println("cart remote logo");
+	}
+	
 	
 	
 
