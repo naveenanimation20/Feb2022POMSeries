@@ -19,23 +19,16 @@
 		</classes>
 	</test>
 
-	<!-- <test name="Open Cart Accounts Page Test">
+	<test name="Open Cart Accounts Page Test">
 		<classes>
 			<class name="com.qa.opencart.tests.AccountsPageTest" />
 		</classes>
-	</test> -->
-
-	<!-- <test name="Open Cart Product Page Test">
-		<classes>
-			<class name="com.qa.opencart.tests.ProductInfoTest" />
-		</classes>
 	</test>
 
-	<test name="Open Cart Register Page Negative Test">
-		<classes>
-			<class name="com.qa.opencart.tests.RegisterTest" />
-		</classes>
-	</test> -->
+	<!-- <test name="Open Cart Product Page Test"> <classes> <class name="com.qa.opencart.tests.ProductInfoTest" 
+		/> </classes> </test> <test name="Open Cart Register Page Negative Test"> 
+		<classes> <class name="com.qa.opencart.tests.RegisterTest" /> </classes> 
+		</test> -->
 
 
 
