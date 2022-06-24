@@ -31,7 +31,7 @@ public class LoginPageTest extends BaseTest {
 	public void loginPageHeaderTest() {
 		//loginPage.getLoginPageTitle();
 		String actualTitle = "Open Cart";
-		Assert.assertEquals(actualTitle, "Open Cart11");
+		Assert.assertEquals(actualTitle, "Open Cart");
 	}
 	
 	

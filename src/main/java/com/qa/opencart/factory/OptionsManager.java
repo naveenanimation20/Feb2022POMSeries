@@ -17,6 +17,13 @@ public class OptionsManager {
 
 	public ChromeOptions getChromeOptions() {
 		co = new ChromeOptions();
+		
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			co.setCapability("enableVNC", true);
+			co.setBrowserVersion(prop.getProperty("browserversion"));
+		}
+		
+		
 		if(Boolean.parseBoolean(prop.getProperty("headless"))) co.setHeadless(true);
 		if(Boolean.parseBoolean(prop.getProperty("incognito"))) co.addArguments("--incognito");
 		return co;
@@ -24,6 +31,10 @@ public class OptionsManager {
 
 	public FirefoxOptions getFirefoxOptions() {
 		fo = new FirefoxOptions();
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			fo.setCapability("enableVNC", true);
+			fo.setBrowserVersion(prop.getProperty("browserversion"));
+		}
 		if(Boolean.parseBoolean(prop.getProperty("headless"))) fo.setHeadless(true);
 		if(Boolean.parseBoolean(prop.getProperty("incognito"))) fo.addArguments("--incognito");
 		return fo;
