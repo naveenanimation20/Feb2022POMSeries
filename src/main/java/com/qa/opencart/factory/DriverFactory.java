@@ -195,5 +195,10 @@ public class DriverFactory {
 		}
 		return path;
 	}
+	
+	
+	public int getTestCount() {
+		return 100;
+	}
 
 }
