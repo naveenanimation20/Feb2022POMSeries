@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -32,6 +33,9 @@ public class DriverFactory {
 	Properties prop;
 	OptionsManager optionsManager;
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
+	
+	public static Logger log = Logger.getLogger(DriverFactory.class);
+	
 
 	/**
 	 * this method is used to initialize the driver on the basis of given
@@ -47,6 +51,7 @@ public class DriverFactory {
 		//String browserName = System.getProperty("browser");
 
 		System.out.println("browser name is : " + browserName);
+		log.info("browser name is : " + browserName);
 
 		optionsManager = new OptionsManager(prop);
 
@@ -56,6 +61,7 @@ public class DriverFactory {
 				// remote execution:
 				init_remoteDriver("chrome");
 			} else {
+				log.info("running tests on local....");
 				// local execution:
 				WebDriverManager.chromedriver().setup();
 				tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
@@ -130,9 +136,11 @@ public class DriverFactory {
 
 		String envName = System.getProperty("env");
 		System.out.println("Running tests on environment: " + envName);
+		log.info("Running tests on environment: " + envName);
 
 		if (envName == null) {
 			System.out.println("No env is given ..... hence running it on QA");
+			log.info("No env is given ..... hence running it on QA");
 			try {
 				ip = new FileInputStream("./src/test/resources/config/qa.config.properties");
 			} catch (FileNotFoundException e) {
@@ -162,6 +170,7 @@ public class DriverFactory {
 
 				default:
 					System.out.println("please pass the right environment value..." + envName);
+					log.error("please pass the right environment value..." + envName);
 					throw new FrameworkException("no env found...");
 				}
 			} catch (FileNotFoundException e) {

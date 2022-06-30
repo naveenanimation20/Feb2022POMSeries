@@ -1,8 +1,10 @@
 package com.qa.opencart.pages;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import com.qa.opencart.factory.DriverFactory;
 import com.qa.opencart.utils.Constants;
 import com.qa.opencart.utils.ElementUtil;
 
@@ -21,6 +23,8 @@ public class LoginPage {
 	private By registerLink = By.linkText("Register");
 	private By accLogoutMessage = By.cssSelector("div#content h1");
 	
+	public static Logger log = Logger.getLogger(LoginPage.class);
+
 
 	// 2. public page class const...
 	public LoginPage(WebDriver driver) {
@@ -33,6 +37,7 @@ public class LoginPage {
 	public String getLoginPageTitle() {
 		String title = eleUtil.waitForTitleIs(Constants.LOGIN_PAGE_TITLE, Constants.DEFAULT_TIME_OUT);
 		System.out.println("login page title is: " + title);
+		log.info("login page title is:" + title);
 		return title;
 	}
 
