@@ -197,8 +197,6 @@ public class DriverFactory {
 	}
 	
 	
-	public int getTestCount() {
-		return 100;
-	}
+	
 
 }
