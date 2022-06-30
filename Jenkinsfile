@@ -1,54 +1,72 @@
-pipeline{
-    
+pipeline 
+{
     agent any
     
-    stages{
-        
-        stage("build"){
-            steps{
-                echo("build the project")
+    tools{
+    	maven 'maven'
+        }
+
+    stages 
+    {
+        stage('Build') 
+        {
+            steps
+            {
+                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+            post 
+            {
+                success
+                {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
             }
         }
         
-        stage("Run Unit test"){
-            steps{
-                echo("run UTs")
-            }
-        }
-        
-        stage("Run Integration test"){
-            steps{
-                echo("run ITs")
-            }
-        }
-        
-        stage("Deploy to dev"){
-            steps{
-                echo("deploy to dev")
-            }
-        }
         
         stage("Deploy to QA"){
             steps{
-                echo("deploy to QA")
+                echo("deploy to qa")
+            }
+        }
+                
+        stage('Regression Automation Test') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/naveenanimation20/Feb2022POMSeries.git'
+                    sh "mvn clean install"
+                    
+                }
+            }
+        }
+                
+     
+        stage('Publish Allure Reports') {
+           steps {
+                script {
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        properties: [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: '/allure-results']]
+                    ])
+                }
             }
         }
         
-        stage("Run regression test cases on QA"){
-            steps{
-                echo("Run test cases on QA")
-            }
-        }
         
-        stage("Deploy to stage"){
+        stage('Publish Extent Report'){
             steps{
-                echo("deploy to stage")
-            }
-        }
-        
-         stage("Run sanity test cases on QA"){
-            steps{
-                echo("Run sanity test cases on QA")
+                     publishHTML([allowMissing: false,
+                                  alwaysLinkToLastBuild: false, 
+                                  keepAll: false, 
+                                  reportDir: 'build', 
+                                  reportFiles: 'TestExecutionReport.html', 
+                                  reportName: 'HTML Extent Report', 
+                                  reportTitles: ''])
             }
         }
         
@@ -57,10 +75,5 @@ pipeline{
                 echo("deploy to PROD")
             }
         }
-        
-        
-        
     }
-    
-    
 }
