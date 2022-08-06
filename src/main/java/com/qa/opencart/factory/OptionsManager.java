@@ -1,5 +1,6 @@
 package com.qa.opencart.factory;
 
+import java.io.File;
 import java.util.Properties;
 
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,26 +18,32 @@ public class OptionsManager {
 
 	public ChromeOptions getChromeOptions() {
 		co = new ChromeOptions();
-		
-		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+		co.addExtensions(new File("/Users/naveenautomationlabs/Downloads/extension_1_3_4_0.crx"));
+
+		if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 			co.setCapability("enableVNC", true);
 			co.setBrowserVersion(prop.getProperty("browserversion"));
 		}
-		
-		
-		if(Boolean.parseBoolean(prop.getProperty("headless"))) co.setHeadless(true);
-		if(Boolean.parseBoolean(prop.getProperty("incognito"))) co.addArguments("--incognito");
+
+		if (Boolean.parseBoolean(prop.getProperty("headless")))
+			//co.setHeadless(true);
+			co.addArguments("--headless=chrome");
+
+		if (Boolean.parseBoolean(prop.getProperty("incognito")))
+			co.addArguments("--incognito");
 		return co;
 	}
 
 	public FirefoxOptions getFirefoxOptions() {
 		fo = new FirefoxOptions();
-		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+		if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 			fo.setCapability("enableVNC", true);
 			fo.setBrowserVersion(prop.getProperty("browserversion"));
 		}
-		if(Boolean.parseBoolean(prop.getProperty("headless"))) fo.setHeadless(true);
-		if(Boolean.parseBoolean(prop.getProperty("incognito"))) fo.addArguments("--incognito");
+		if (Boolean.parseBoolean(prop.getProperty("headless")))
+			fo.setHeadless(true);
+		if (Boolean.parseBoolean(prop.getProperty("incognito")))
+			fo.addArguments("--incognito");
 		return fo;
 	}
 

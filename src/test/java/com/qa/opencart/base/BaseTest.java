@@ -18,6 +18,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
@@ -82,7 +83,15 @@ public class BaseTest {
 	}
 
 	@AfterTest
-	public void tearDown() {
+	public void tearDown() throws InterruptedException {
+		driver.close();
+		driver.switchTo().window(prop.getProperty("tcstudioid"));
+		Thread.sleep(3000);
+		System.out.println(driver.getTitle());
+		//driver.findElement(By.cssSelector("input[placeholder='Set the TestCase Name here']")).sendKeys("logintest");
+		driver.findElement(By.id("save_btn")).click();
+		Thread.sleep(5000);
+
 		driver.quit();
 	}
 
